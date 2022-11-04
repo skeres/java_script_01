@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Titre de la page</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+
+
+<!-- 
+Point d'attention : l'attribut "name" :
+	Seuls les éléments de formulaire avec un attribut name auront leurs
+	valeurs passées lors de la soumission d’un formulaire.
+
+-->
+
+<!-- 
+ La balise <input /> . Elle existe en quatre versions :
+
+type="submit"	:	Le principal bouton d'envoi de formulaire. C'est celui que vous utiliserez le plus souvent. 
+					Le visiteur sera conduit à la page indiquée dans l'attribut action  du formulaire.
+type="reset"  	: 	Remise à zéro du formulaire ;
+type="image" 	:	Equivalent du bouton submit, présenté cette fois sous forme d'image.
+				 	Rajoutez l'attribut src  pour indiquer l'URL de l'image ;
+type="button"	:	Bouton générique, qui n'aura (par défaut) aucun effet. 
+					En général, ce bouton est géré en JavaScript pour exécuter des actions sur la page. 
+
+Note : On peut changer le texte affiché à l'intérieur des boutons avec l'attribut value
+-->
+
+<!-- illustration d'input d'une variable cachée non affichée pour conserver l'ancienne valeur-->
+<label for="firstName">First name:</label><br>
+<input type="text" id="id_firstName" name="name_firstName" value="John" onchange="checkfirstNameChange(id_oldFirstName.value, id_firstName.value)"><br>
+<label for="lastName">Last name:</label><br>
+<input type="text" id="id_lastName" name="namelastName" value="Doe"><br><br>
+<input type="hidden" id="id_oldFirstName" name="name_oldfirstName" value="initial">
+
+<!-- illustration d'uen liste déroulante avec gestion d'une variable cachée non affichée pour conserver l'ancienne valeur-->
+<select class='class_select' name="name_select" id="id_select" onchange="getItemFromList(this.options[this.selectedIndex].value)">
+	<option selected disabled>- Select a country - </option>
+		<option name="name_france" value="France">France</option>
+		<option name="name_allemagne" value="Allemagne">Allemagne</option>
+		<option name="name_italie" value="Italie">Italie</option>
+</select><br />
+<input type="hidden" id="id_oldCountry" name="name_oldCountry">
+
+
+
+
+
+<script type="text/javascript">    
+
+function checkfirstNameChange(local_oldFirstName, local_new_firstName) {
+	console.log('>>> in checkfirstNameChange ()');
+	console.log('local_new_firstName ='+local_new_firstName);
+	console.log('oldFirstName before update ='+local_oldFirstName);
+	document.getElementById("id_oldFirstName").setAttribute("value", local_new_firstName);
+	console.log('oldFirstName after update ='+document.getElementById("id_oldFirstName").value);
+}
+
+
+function getItemFromList(local_val) {
+	console.log('>>> in getItemFromList()');
+	console.log('value of id_oldCountry before update is = '+document.getElementById("id_oldCountry").value);
+	document.getElementById("id_oldCountry").setAttribute("value", local_val);
+	console.log('value of id_oldCountry after update is now = '+document.getElementById("id_oldCountry").value);
+
+	getValueWithJquery();
+}
+
+/****************************************************************************************
+ illustration du JQuery
+
+Sélectionner un identifiant #sub-footer
+javascript 	: 	document.getElementById('sub-footer');
+jQuery		: 	$('#sub-footer');   					( le # est pour les Id )
+
+Sélectionner une classe box
+Javascript 	: 	document.getElementsByClassName('box');
+jQuery		:	$('.box');   					( le . est pour les classes, "un peu" comme en Java )
+
+les différents type de "Selector" en JQuery : https://api.jquery.com/category/selectors/
+****************************************************************************************
+*/
+function getValueWithJquery() {
+
+	console.log('>>> in getValueWithJquery()');
+	console.log('jquery 1 #id_firstName='+$('#id_firstName').val());
+	console.log('jquery 2 #id_select='+$('#id_select').val());
+	console.log('jquery 3 #id_select selected value with selector ='+$('#id_select').find(':selected').val());
+	console.log('jquery 4 .class_select ='+$('.class_select').find(':selected').val());
+
+	setValueWithJquery();
+
+}
+
+
+/****************************************************************************************
+ illustration du JQuery : get or set value
+
+Return the value attribute					:	$(selector).val()
+Set the value attribute						:	$(selector).val(value)
+Set the value attribute using a function	:	$(selector).val(function(index,currentvalue))
+
+}
+****************************************************************************************
+*/
+function setValueWithJquery() {
+
+	console.log('>>> in setValueWithJquery()');
+	console.log('jquery 1 set #id_lastName with Smith');
+	$('#id_lastName').val('Smith');
+
+}
+
+</script>
+ 
+</body>
+</html>
+
+
+
